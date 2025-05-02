@@ -28,4 +28,14 @@ export class CalendarComponent {
   protected readonly control = new FormControl(
     new TuiDayRange(TuiDay.currentLocal(), TuiDay.currentLocal()),
   );
+
+  ngOnInit(): void {
+    this.control.valueChanges.subscribe((value: TuiDayRange | null) => {
+      if (value) {
+        const from = value.from.getFormattedDay('DMY', '.');
+        const to = value.to.getFormattedDay('DMY', '.');
+        console.log('Выбран диапазон дат:', `${from} - ${to}`);
+      }
+    });
+  }
 }
