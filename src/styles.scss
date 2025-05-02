@@ -9,6 +9,14 @@
   --gray-color: #AEAEAE;
   --dark-gray-color: #797979;
   --red-color: #FF5C5C;
+
+  --tui-primary-hover: #03523F;
+  --tui-background-accent-1: #03523F;
+  --tui-background-accent-1-hover: #03523F;
+  --tui-text-action: #03523F;
+  --tui-background-neutral-1: #F0E9DF;
+  --tui-background-neutral-1-hover: #F0E9DF;
+  --tui-radius-m: 0.9rem;
 }
 
 *,
@@ -19,4 +27,14 @@
 
 .nav, .pagination, .carousel, .panel-title a {
   cursor: pointer;
+}
+
+body{
+  background: url(/assets/svg/background.svg) no-repeat, var(--primary-yellow-color);
+  background-size: cover;
+}
+
+tui-root {
+  border-image: none !important;
+  background: transparent !important;
 }
