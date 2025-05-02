@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+@import "fonts";
+
+:root{
+  --dark-color: #000000;
+  --light-color: #FFFFFF;
+  --primary-yellow-color: #F0E9DF;
+  --primary-green-color: #03523F;
+  --gray-color: #AEAEAE;
+  --dark-gray-color: #797979;
+  --red-color: #FF5C5C;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.nav, .pagination, .carousel, .panel-title a {
+  cursor: pointer;
+}
