@@ -7,7 +7,7 @@ import {AppComponent} from './app.component';
   declarations: [],
   imports: [
     CommonModule,
-    AppComponent
+    AppComponent,
   ],
   providers: [
     {
