@@ -57,6 +57,14 @@ export class FilterFoodComponent {
     { name: 'Бар', checked: true },
     { name: 'Мясо', checked: true },
     { name: 'Молочные продукты', checked: true },
+    { name: 'Молочные продукты', checked: true },
+    { name: 'Молочные продукты', checked: true },
+    { name: 'Молочные продукты', checked: true },
+    { name: 'Молочные продукты', checked: true },
+    { name: 'Молочные продукты', checked: true },
+    { name: 'Молочные продукты', checked: true },
+    { name: 'Молочные продукты', checked: true },
+    { name: 'Молочные продукты', checked: true },
     { name: 'Сэндвичи', checked: true },
     { name: 'Горячие напитки', checked: true }
   ];

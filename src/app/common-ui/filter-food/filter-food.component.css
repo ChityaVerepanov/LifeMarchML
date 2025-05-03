@@ -1,3 +1,13 @@
+.main-filter-div{
+  display: flex;
+  height: 63vh;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+}
+
 .filter-title-div{
   display: flex;
   width: 75%;
@@ -36,7 +46,7 @@
 
 .search-input{
   position: absolute;
-  left: 0px;
+  left: 0;
   top: 0;
   width: 100%;
   height: 100%;
@@ -51,6 +61,11 @@
   z-index: 2;
 }
 
+.search-input::placeholder {
+  font-family: "JetBrains Mono", sans-serif;
+  font-size: 14px;
+}
+
 @keyframes slide-in-left {
   from {
     transform: translateX(15%);
@@ -62,15 +77,6 @@
   }
 }
 
-.main-filter-div{
-  display: flex;
-  border: 1px solid rebeccapurple;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-}
 
 .custom-checkbox {
   display: flex;
@@ -132,7 +138,7 @@
 
 .scrollable-list {
   border: 1px solid var(--dark-gray-color);
-  max-height: 300px;
+  max-height: 100%;
   background-color: var(--light-color);
   border-radius: 20px;
   overflow-y: auto;
@@ -145,7 +151,7 @@
 .scrollable-list-ul{
   display: flex;
   list-style: none;
-  gap: 30px;
+  gap: 20px;
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: flex-start;
@@ -180,7 +186,7 @@
 hr {
   width: 60%;
   border: none;
-  height: 1.5px;
+  height: 3px;
   background-color: var(--dark-color);
   margin: 2vh 0;
 }

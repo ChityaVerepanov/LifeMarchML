@@ -9,7 +9,6 @@
         class="search-input"
         placeholder="Начните вводить..."
         [(ngModel)]="searchQuery"
-        (blur)="toggleSearch()"
         (keydown)="onSearchKeydown($event)"
       >
       <button class="search-btn" (click)="toggleSearch()">
