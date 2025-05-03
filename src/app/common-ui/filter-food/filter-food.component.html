@@ -1,0 +1,32 @@
+<div class="main-filter-div">
+  <div class="filter-title-div">
+    <div class="filter-title-container">
+      <p>Фильтры</p>
+      <input
+        *ngIf="searchActive"
+        #searchInput
+        type="text"
+        class="search-input"
+        placeholder="Начните вводить..."
+        [(ngModel)]="searchQuery"
+        (blur)="toggleSearch()"
+        (keydown)="onSearchKeydown($event)"
+      >
+      <button class="search-btn" (click)="toggleSearch()">
+        <img src="assets/svg/search-icon.svg" alt="Поиск">
+      </button>
+    </div>
+  </div>
+  <hr>
+  <div class="scrollable-list">
+    <ul class="scrollable-list-ul">
+      <li *ngFor="let item of filteredItems" class="scrollable-list-li">
+        <label class="custom-checkbox">
+          <input type="checkbox" [(ngModel)]="item.checked" />
+          <span class="checkmark"></span>
+          {{item.name}}
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>

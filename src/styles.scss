@@ -58,3 +58,7 @@ tui-root {
   background: var(--hover-green-color);
   transition: 0.2s;
 }
+
+tui-dropdown {
+  z-index: 2 !important;
+}

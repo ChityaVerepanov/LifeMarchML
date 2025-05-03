@@ -1,0 +1,212 @@
+.filter-title-div{
+  display: flex;
+  width: 75%;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: visible;
+}
+
+.filter-title-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Центрируем содержимое */
+  width: 70%;
+  min-width: 0;
+  height: 35px;
+  padding: 10px 0;
+  overflow: visible;
+  z-index: 0;
+}
+
+.filter-title-container p {
+  font-weight: 500;
+  font-size: 20px;
+  margin: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  pointer-events: none; /* чтобы клик проходил сквозь, если нужно */
+  width: 100%;
+}
+
+.search-input{
+  position: absolute;
+  left: 0px;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  padding: 0 10px;
+  border: 1px solid var(--dark-gray-color);
+  border-radius: 10px;
+  outline: none;
+  background: #fff;
+  animation: slide-in-left 0.3s forwards;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+@keyframes slide-in-left {
+  from {
+    transform: translateX(15%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+.main-filter-div{
+  display: flex;
+  border: 1px solid rebeccapurple;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  font-size: 18px;
+  gap: 12px;
+  position: relative;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  /* Скрываем стандартный чекбокс */
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkmark {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #BDBDBD; /* Серый border */
+  border-radius: 6px;
+  background: #fff;
+  transition: border-color 0.2s, background 0.2s;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkmark {
+  border-color: var(--primary-green-color);
+  background: var(--primary-green-color);
+}
+
+/* Галочка */
+.checkmark::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 5px;
+  width: 7px;
+  height: 16px;
+  border: solid #F0E9DF;
+  border-width: 0 3px 3px 0;
+  opacity: 0;
+  transform: rotate(45deg) scale(0.8);
+  transition: opacity 0.2s;
+}
+
+
+.custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
+  opacity: 1;
+}
+
+
+
+.scrollable-list {
+  border: 1px solid var(--dark-gray-color);
+  max-height: 300px;
+  background-color: var(--light-color);
+  border-radius: 20px;
+  overflow-y: auto;
+  padding: 8px;
+  width: 75%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+}
+
+.scrollable-list-ul{
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.scrollable-list-li{
+  display: flex;
+  width: 80%;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: baseline;
+  text-wrap: wrap;
+  max-height: 50px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.scrollable-list-li::after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: -50px;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary-green-color);
+  border-radius: 2px;
+}
+
+hr {
+  width: 60%;
+  border: none;
+  height: 1.5px;
+  background-color: var(--dark-color);
+  margin: 2vh 0;
+}
+
+.search-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 35px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: none;
+  border: 1px solid var(--dark-gray-color);
+  cursor: pointer;
+  transition: 0.3s;
+  aspect-ratio: 1.1;
+}
+
+.search-btn:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: 0.3s;
+}
+.search-btn img{
+  width: 50%;
+}
