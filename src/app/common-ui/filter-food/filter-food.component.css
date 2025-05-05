@@ -1,6 +1,6 @@
 .main-filter-div{
   display: flex;
-  height: 63vh;
+  height: 65vh;
   flex-direction: column;
   width: 100%;
   align-items: center;
@@ -134,18 +134,16 @@
   opacity: 1;
 }
 
-
-
 .scrollable-list {
   border: 1px solid var(--dark-gray-color);
   max-height: 100%;
   background-color: var(--light-color);
   border-radius: 20px;
-  overflow-y: auto;
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
   padding: 8px;
   width: 75%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-
 }
 
 .scrollable-list-ul{
