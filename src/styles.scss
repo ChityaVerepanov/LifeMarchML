@@ -5,17 +5,19 @@
   --dark-color: #000000;
   --light-color: #FFFFFF;
   --primary-yellow-color: #F0E9DF;
+  --hover-green-color: #236151;
   --primary-green-color: #03523F;
   --gray-color: #AEAEAE;
   --dark-gray-color: #797979;
   --red-color: #FF5C5C;
+  --calendar-bg-hover: #F0E9DF;
 
   --tui-primary-hover: #03523F;
   --tui-background-accent-1: #03523F;
   --tui-background-accent-1-hover: #03523F;
   --tui-text-action: #03523F;
   --tui-background-neutral-1: #F0E9DF;
-  --tui-background-neutral-1-hover: #F0E9DF;
+  --tui-background-neutral-1-hover: var(--calendar-bg-hover);
   --tui-radius-m: 0.9rem;
 }
 
@@ -30,6 +32,7 @@
 }
 
 body{
+  font-family: 'JetBrains Mono', sans-serif;
   background: url(/assets/svg/background.svg) no-repeat, var(--primary-yellow-color);
   background-size: cover;
 }
@@ -37,4 +40,25 @@ body{
 tui-root {
   border-image: none !important;
   background: transparent !important;
+}
+.btn{
+  cursor: pointer;
+  border: none;
+  background: var(--primary-green-color);
+  color: var(--light-color);
+  border-radius: 20px;
+  padding: 20px;
+  font-size: 18px;
+  font-family: 'JetBrains Mono', sans-serif;
+  font-weight: 700;
+  transition: 0.2s;
+}
+
+.btn:hover{
+  background: var(--hover-green-color);
+  transition: 0.2s;
+}
+
+tui-dropdown {
+  z-index: 2 !important;
 }

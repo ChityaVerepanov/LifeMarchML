@@ -1,0 +1,266 @@
+.table-container {
+  border: 1px solid #f30000;
+  height: 80vh;
+  width: 55vw;
+  overflow: auto;
+  padding: 0;
+  margin-bottom: 50px;
+  background: var(--light-color);
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+tbody tr{
+  position: relative;
+}
+
+tbody tr::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 90%;
+  height: 1px;
+  background: #e0e0e0;
+  margin: 0 auto;
+  pointer-events: none;
+}
+
+
+tbody tr:last-child::after {
+  display: none; /* Не показывать линию под последней строкой */
+}
+
+th, td {
+  padding: 12px 0;
+  text-align: left;
+  vertical-align: middle;
+  border-right: 1px solid #e0e0e0;
+}
+
+th:last-child,
+td:last-child {
+  border-right: none;
+}
+
+th {
+  background: #f9f9f9;
+  font-weight: 600;
+}
+
+.table-list-name {
+  padding-left: 20px;
+}
+
+.table-name-title {
+  text-align: center;
+  vertical-align: middle;
+  height: 60px;
+  padding: 0;
+}
+
+.table-title-flex {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 16px;
+}
+
+.search-input {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  padding: 0 10px;
+  border: 1px solid var(--dark-gray-color);
+  border-radius: 10px;
+  outline: none;
+  background: #fff;
+  animation: slide-in-left 0.3s forwards;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+.search-input::placeholder {
+  font-family: "JetBrains Mono", sans-serif;
+  font-size: 14px;
+}
+
+@keyframes slide-in-left {
+  from {
+    transform: translateX(15%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+/* Кнопка поиска */
+.search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--dark-gray-color);
+  border-radius: 10px;
+  color: var(--dark-color);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 10px;
+  width: 100px;
+  height: 38px;
+  white-space: nowrap;
+  gap: 6px;
+  transition: box-shadow 0.3s;
+}
+
+.search-btn:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.search-btn .icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* Итоговая строка */
+tfoot td {
+  background: #fafafa;
+  font-weight: bold;
+}
+
+/* Кастомный чекбокс */
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  font-size: 18px;
+  gap: 12px;
+  position: relative;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkmark {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #BDBDBD;
+  border-radius: 6px;
+  background: #fff;
+  transition: border-color 0.2s, background 0.2s;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkmark {
+  border-color: var(--primary-green-color, #4caf50);
+  background: var(--primary-green-color, #4caf50);
+}
+
+.checkmark::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 5px;
+  width: 7px;
+  height: 16px;
+  border: solid #F0E9DF;
+  border-width: 0 3px 3px 0;
+  opacity: 0;
+  transform: rotate(45deg) scale(0.8);
+  transition: opacity 0.2s;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
+  opacity: 1;
+}
+
+/* Липкий заголовок */
+.sticky-header th {
+  padding: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: var(--light-color);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  /* Для псевдоэлемента линии */
+}
+
+.table-list-flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.table-list-flex-end{
+  display: flex;
+  padding-right: 15px;
+  justify-content: flex-end;
+}
+
+.sticky-header th::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 2px;
+  background: var(--dark-color);
+  z-index: 10;
+}
+
+/* Липкий подвал */
+.sticky-footer td {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  background: var(--light-color);
+  box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
+  /* Для псевдоэлемента линии */
+}
+
+.sticky-footer td::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: -1.5px;
+  width: 100%;
+  height: 2px;
+  background: var(--dark-color);
+  z-index: 10;
+}
+
+/* Липкая разделительная линия перед подвалом */
+.sticky-footer-divider {
+  position: sticky;
+  bottom: 48px; /* Высота подвала */
+  z-index: 2;
+  background: inherit;
+}
+
