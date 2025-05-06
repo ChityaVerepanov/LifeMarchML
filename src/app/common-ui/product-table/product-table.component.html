@@ -1,1 +1,90 @@
-<p>product-table works!</p>
+<div class="table-container">
+  <table>
+    <!-- Заголовок -->
+    <thead>
+    <tr class="sticky-header">
+      <th class="table-name-title">
+        <div class="table-title-flex">
+          <span class="title-text">Наименование товара</span>
+          <input
+            *ngIf="searchActive"
+            #searchInput
+            type="text"
+            class="search-input"
+            placeholder="Начните вводить..."
+            [(ngModel)]="searchQuery"
+            (keydown)="onSearchKeydown($event)"
+          >
+          <button class="search-btn" (click)="toggleSearch()">
+            <img class="icon" src="assets/svg/search-icon.svg" alt="Найти">
+            Поиск
+          </button>
+        </div>
+      </th>
+      <th>
+        <div class="table-title-flex">
+          Кол-во товаров (шт)
+        </div>
+      </th>
+      <th>
+        <div class="table-title-flex">
+          Стоимость (руб)
+        </div>
+      </th>
+    </tr>
+    </thead>
+
+    <!-- Основное содержимое -->
+    <tbody>
+    <tr *ngFor="let product of filteredProducts">
+      <td class="table-list-name">
+        <label class="custom-checkbox"
+               (mousedown)="onCheckboxMouseDown($event, product)"
+               (mouseenter)="onCheckboxMouseEnter($event, product)"
+               (mouseup)="onCheckboxMouseUp()"
+               [class.dragging]="isDragging"
+        >
+          <input
+            type="checkbox"
+            [(ngModel)]="product.checked"
+            (click)="onCheckboxClick($event, product)"
+          />
+          <span class="checkmark"></span>
+          {{ product.name }}
+        </label>
+      </td>
+      <td>
+        <div class="table-list-flex">
+          {{ product.quantity }}
+        </div>
+      </td>
+      <td>
+        <div class="table-list-flex">
+          {{ product.price }}
+        </div>
+      </td>
+    </tr>
+    </tbody>
+
+    <!-- Подвал -->
+    <tfoot>
+    <tr class="sticky-footer">
+      <td class="table-list-name">
+        <div class="table-list-flex-end">
+          <b>Итого:</b>
+        </div>
+      </td>
+      <td>
+        <div class="table-list-flex">
+          <b>{{ totalQuantity | number }} шт</b>
+        </div>
+      </td>
+      <td>
+        <div class="table-list-flex">
+          <b>{{ totalPrice | number:'1.2-2' }} руб</b>
+        </div>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+</div>
