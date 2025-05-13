@@ -1,13 +1,50 @@
+.main-right-block-div{
+  border: 1px solid blue;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+
 .btn-show-detail{
   display: flex;
   width: 75%;
-  height: 60px;
   padding: 0;
+  height: 60px;
   font-size: 18px;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
+}
+
+.btn-show-detail:hover{
+  background-color: var(--primary-yellow-color);
+  border: 1px solid var(--dark-gray-color);
+  color: var(--primary-green-color);
+  fill: var(--primary-green-color);
+}
+
+.btn-get-report{
+  display: flex;
+  width: 75%;
+  padding: 0;
+  height: 60px;
+  font-size: 18px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-get-report:hover{
+  background-color: var(--primary-yellow-color);
+  border: 1px solid var(--dark-gray-color);
+  color: var(--primary-green-color);
+  fill: var(--primary-green-color);
 }
 
 .btn-show-detail img{
@@ -16,19 +53,14 @@
 
 .btn-show-detail-div{
   display: flex;
-  flex-direction: column;
-  width: 50vw;
+  height: 60px;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+  margin-top: 20px;
   min-width: 340px;
+  justify-content: flex-end;
   flex-wrap: nowrap;
-  align-items: center;
-}
-
-.main-right-block-div{
-  border: 1px solid blue;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: center;
   align-items: center;
 }

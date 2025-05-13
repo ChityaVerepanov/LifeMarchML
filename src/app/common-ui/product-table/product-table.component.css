@@ -4,7 +4,6 @@
   width: 55vw;
   overflow: auto;
   padding: 0;
-  margin-bottom: 50px;
   background: var(--light-color);
   border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
