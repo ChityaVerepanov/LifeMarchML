@@ -1,6 +1,9 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {Category} from '../../data/category/category';
+import {CategoryService} from '../../data/category/category.service';
+import {debounceTime, distinctUntilChanged, Subject, switchMap} from 'rxjs';
 
 @Component({
   selector: 'app-filter-food',
@@ -15,8 +18,53 @@ import {FormsModule} from '@angular/forms';
 export class FilterFoodComponent {
   searchQuery: string = '';
   searchActive = false;
+  items: (Category & { checked: boolean })[] = [];
+  private checkedStates: { [id: number]: boolean } = {};
+  private searchSubject = new Subject<string>();
 
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
+
+
+  constructor(private categoryService: CategoryService) {}
+
+  ngOnInit() {
+    this.loadInitialData();
+    this.setupSearch();
+  }
+
+  private loadInitialData() {
+    this.categoryService.getAllCategories().subscribe(categories => {
+      this.items = this.mapCategories(categories);
+    });
+  }
+
+  private setupSearch() {
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(query => query
+        ? this.categoryService.searchByName(query)
+        : this.categoryService.getAllCategories()
+      )
+    ).subscribe(categories => {
+      this.items = this.mapCategories(categories);
+    });
+  }
+
+  private mapCategories(categories: Category[]) {
+    return categories.map(category => ({
+      ...category,
+      checked: this.checkedStates[category.id] ?? true
+    }));
+  }
+
+  onSearchInput() {
+    this.searchSubject.next(this.searchQuery.trim());
+  }
+
+  onCheckboxChange(item: Category & { checked: boolean }) {
+    this.checkedStates[item.id] = item.checked;
+  }
 
   toggleSearch(){
     this.searchActive = !this.searchActive;
@@ -43,29 +91,4 @@ export class FilterFoodComponent {
       this.searchActive = false;
     }
   }
-
-
-  items = [
-    { name: 'Готовая еда', checked: true },
-    { name: 'Напитки', checked: true },
-    { name: 'Бакалея', checked: true },
-    { name: 'ХБИ', checked: true },
-    { name: 'Бар', checked: true },
-    { name: 'Бар', checked: true },
-    { name: 'Бар', checked: true },
-    { name: 'Бар', checked: true },
-    { name: 'Бар', checked: true },
-    { name: 'Мясо', checked: true },
-    { name: 'Молочные продукты', checked: true },
-    { name: 'Молочные продукты', checked: true },
-    { name: 'Молочные продукты', checked: true },
-    { name: 'Молочные продукты', checked: true },
-    { name: 'Молочные продукты', checked: true },
-    { name: 'Молочные продукты', checked: true },
-    { name: 'Молочные продукты', checked: true },
-    { name: 'Молочные продукты', checked: true },
-    { name: 'Молочные продукты', checked: true },
-    { name: 'Сэндвичи', checked: true },
-    { name: 'Горячие напитки', checked: true }
-  ];
 }

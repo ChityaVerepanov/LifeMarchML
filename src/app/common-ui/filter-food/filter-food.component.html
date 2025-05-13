@@ -9,6 +9,7 @@
         class="search-input"
         placeholder="Начните вводить..."
         [(ngModel)]="searchQuery"
+        (ngModelChange)="onSearchInput()"
         (keydown)="onSearchKeydown($event)"
       >
       <button class="search-btn" (click)="toggleSearch()">
@@ -21,7 +22,11 @@
     <ul class="scrollable-list-ul">
       <li *ngFor="let item of filteredItems" class="scrollable-list-li">
         <label class="custom-checkbox">
-          <input type="checkbox" [(ngModel)]="item.checked" />
+          <input
+            type="checkbox"
+            [(ngModel)]="item.checked"
+            (ngModelChange)="onCheckboxChange(item)"
+          />
           <span class="checkmark"></span>
           {{item.name}}
         </label>
