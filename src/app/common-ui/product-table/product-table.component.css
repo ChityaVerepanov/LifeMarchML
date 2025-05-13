@@ -1,12 +1,13 @@
 .table-container {
   border: 1px solid #f30000;
-  height: 80vh;
+  height: 84vh;
   width: 55vw;
   overflow: auto;
   padding: 0;
   background: var(--light-color);
   border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-top: 1vh;
 }
 
 table {
