@@ -5,7 +5,13 @@ let browserWindow;
 function createBrowserWindow() {
   browserWindow = new BrowserWindow({
     width: 1200,
-    height: 800
+    height: 800,
+    webPreferences: {
+      webSecurity: false, // отключаем CORS-политику
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: path.join(__dirname, 'preload.js') // путь к preload.js
+    }
   });
   browserWindow.loadURL(
     url.format({

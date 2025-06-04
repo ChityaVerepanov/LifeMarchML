@@ -1,0 +1,175 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.1);
+  z-index: 1000;
+  transition: 0.2s;
+}
+.modal-window {
+  display: flex;
+  width: 600px;
+  height: 500px;
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem;
+  border-radius: 10px;
+  z-index: 1001;
+  background: rgba(255, 255, 255, 0.9); /* полупрозрачный белый */
+  backdrop-filter: blur(10px);           /* размытие фона */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* светлая полупрозрачная рамка */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* легкая тень */
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-title{
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 0.5em;
+}
+
+.title-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.under-title-text{
+  text-align: center;
+  color: var(--dark-gray-color);
+  text-wrap: inherit;
+  margin-bottom: 1.5em;
+}
+
+.btn-close-modal{
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: absolute;
+  right: 1%;
+  top: 5%;
+  transform: translateY(-50%);
+}
+
+
+.dropzone {
+  display: flex;
+  border: 2px dashed var(--primary-green-color);
+  border-radius: 12px;
+  padding: 32px 16px 24px 16px;
+  text-align: center;
+  background: var(--light-color);
+  transition: border-color 0.2s, background 0.2s;
+  margin-bottom: 24px;
+  position: relative;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.dropzone.dragover {
+  border-color: #1976d2;
+  background: rgba(144,202,249,0.2);
+}
+
+.btn-select-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 16px;
+  padding: 8px 20px;
+  background: var(--primary-green-color);
+  color: var(--light-color);
+  border: 1px solid var(--primary-green-color);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 16px;
+}
+
+.btn-select-file:hover {
+  box-sizing: border-box;
+  transition: 0.2s;
+  color: var(--primary-green-color);
+  background: var(--light-color);
+  border: 1px solid var(--primary-green-color);
+}
+
+.btn-select-file:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.add-icon{
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.selected-file-name{
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.success-checkmark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkmark {
+  width: 72px;
+  height: 72px;
+  display: block;
+  stroke-width: 3;
+  stroke: var(--primary-green-color);
+  stroke-miterlimit: 10;
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.checkmark__circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 3;
+  stroke-miterlimit: 10;
+  stroke: var(--primary-green-color);
+  fill: none;
+  animation: stroke 2s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark__check {
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  stroke-width: 3;
+  stroke: var(--primary-green-color);
+  fill: none;
+  animation: stroke 2s 0.2s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.error-message {
+  color: #d32f2f;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+}
+

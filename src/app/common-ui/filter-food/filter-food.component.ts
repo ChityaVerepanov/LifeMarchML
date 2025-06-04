@@ -1,8 +1,8 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {Category} from '../../data/category/category';
-import {CategoryService} from '../../data/category/category.service';
+import {Category} from '../../data/categories/interfaces/category';
+import {CategoryService} from '../../data/categories/services/category.service';
 import {debounceTime, distinctUntilChanged, Subject, switchMap} from 'rxjs';
 
 @Component({
@@ -21,6 +21,7 @@ export class FilterFoodComponent {
   items: (Category & { checked: boolean })[] = [];
   private checkedStates: { [id: number]: boolean } = {};
   private searchSubject = new Subject<string>();
+  errorMessage: string | null = null;
 
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
 
