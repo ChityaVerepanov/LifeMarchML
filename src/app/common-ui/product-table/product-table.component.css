@@ -1,6 +1,6 @@
 .table-container {
   height: 84vh;
-  width: 55vw;
+  width: 60vw;
   overflow: auto;
   padding: 0;
   background: var(--light-color);

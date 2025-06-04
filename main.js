@@ -4,8 +4,8 @@ const url = require("url");
 let browserWindow;
 function createBrowserWindow() {
   browserWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: 1400,
+    height: 900,
     webPreferences: {
       webSecurity: false, // отключаем CORS-политику
       nodeIntegration: false,

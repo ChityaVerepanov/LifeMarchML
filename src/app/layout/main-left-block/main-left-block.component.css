@@ -6,6 +6,7 @@
   min-width: 340px;
   flex-wrap: nowrap;
   justify-content: space-around;
+  padding-top: 5vh;
 }
 
 .btn-download-file{

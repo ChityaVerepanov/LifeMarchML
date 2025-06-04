@@ -1,6 +1,6 @@
 .main-right-block-div{
   height: 100%;
-  width: 100%;
+  width: 60vw;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
