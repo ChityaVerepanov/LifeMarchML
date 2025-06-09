@@ -1,16 +1,39 @@
 # LifeMarchML
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
+## About
+This is the frontend part of a project that focuses on developing a desktop application and for predicting product purchases.
 
-## 1. Install Dependencies
+
+## Requirements
+- Node.js >= 22.x
+- npm >= 10.x
+- Angular >= 19.x
+
+## Run
+
+### 1. Download and Install [node.js](https://nodejs.org/en/download)
+
+### 2. Download and Install Angular CLi
+```bash
+npm install -g @angular/cli
+```
+
+### 3. Clone the project
+
+### 4. Install Dependencies
 
 ```bash
 npm install
 ```
 
-## 2. Run
+### 5. Build project
+```bash
+ng build
+```
 
-### Development server
+### 6. Run
+
+#### Run on the web
 
 To start a local development server, run:
 
@@ -18,23 +41,9 @@ To start a local development server, run:
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-### Launch with Electron
-
-You can also launch this project as a separate application using Electron:
+#### To run via Electron:
 
 ```bash
 ng build --base-href ./ && electron .
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
