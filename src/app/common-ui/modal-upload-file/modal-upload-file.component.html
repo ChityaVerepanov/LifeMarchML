@@ -1,50 +1,67 @@
 <div class="modal-backdrop" (click)="onClose()"></div>
 <div class="modal-window">
-  <div class="title-container">
-    <button class="btn-close-modal" (click)="onClose()">
-      <mat-icon>close</mat-icon>
-    </button>
-    <h2 class="modal-title">Загрузка файла (.xls)</h2>
+  <button class="btn-close-modal" (click)="onClose()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <div class="div-content">
+    <div class="title-container">
+      <h2 class="modal-title">Загрузка файла (.xls)</h2>
+    </div>
+    <div class="div-dropzone">
+      <p class="under-title-text">
+        Пожалуйста выберите Excel файл на вашем устройстве для дальнейшей загрузки
+      </p>
+
+      <ng-container *ngIf="isErrorUpload; else notError">
+        <div class="error-checkmark">
+          <svg class="crossmark" viewBox="0 0 52 52">
+            <circle class="crossmark__circle" cx="26" cy="26" r="25" fill="none"/>
+            <path class="crossmark__cross" fill="none" d="M16 16L36 36M36 16L16 36"/>
+          </svg>
+          <p class="error-message">{{ errorMessage }}</p>
+        </div>
+      </ng-container>
+
+      <ng-template #successState>
+        <div class="success-checkmark">
+          <svg class="checkmark" viewBox="0 0 52 52">
+            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+            <path class="checkmark__check" fill="none" d="M14 27l7 7 16-16"/>
+          </svg>
+          <p *ngIf="filePath">{{filePath}}</p>
+        </div>
+      </ng-template>
+
+      <!-- Дропзона и остальное -->
+      <ng-template #notError>
+        <ng-container *ngIf="!isFileUploaded; else successState">
+          <div class="dropzone"
+               (dragover)="onDragOver($event)"
+               (dragleave)="onDragLeave($event)"
+               [ngClass]="{'dragover': isDragOver}"
+               (drop)="onDrop($event)">
+            <p>Перетащите файл сюда</p>
+            <input #fileInput type="file" hidden (change)="onFileSelected($event)"
+                   accept=".xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+            <span>или</span>
+            <button type="button"
+                    class="btn-select-file"
+                    (click)="fileInput.click()"
+                    [disabled]="fileSelected">
+              Выбрать файл
+              <mat-icon class="add-icon">{{ fileSelected ? 'check' : 'upload' }}</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="fileName" class="selected-file-name">
+            <mat-icon color="primary">attach_file</mat-icon>
+            {{ fileName }}
+          </div>
+          <div *ngIf="errorMessage && !isErrorUpload" class="error-message">
+            <mat-icon color="warn">error</mat-icon>
+            {{ errorMessage }}
+          </div>
+        </ng-container>
+      </ng-template>
+    </div>
   </div>
-  <hr style="width: 60%">
-  <p class="under-title-text">Пожалуйста выберите Excel файл на вашем устройстве для дальнейшей загрузки</p>
-
-  <ng-container *ngIf="!isFileUploaded; else successState">
-    <div class="dropzone"
-         (dragover)="onDragOver($event)"
-         (dragleave)="onDragLeave($event)"
-         [ngClass]="{'dragover': isDragOver}"
-         (drop)="onDrop($event)">
-      <p>Перетащите файл сюда</p>
-      <input #fileInput type="file" hidden (change)="onFileSelected($event)"
-             accept=".xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-      <span>или</span>
-      <button type="button"
-              class="btn-select-file"
-              (click)="fileInput.click()"
-              [disabled]="fileSelected">
-        Выбрать файл
-        <mat-icon class="add-icon">{{ fileSelected ? 'check' : 'upload' }}</mat-icon>
-      </button>
-    </div>
-    <div *ngIf="fileName" class="selected-file-name">
-      <mat-icon color="primary">attach_file</mat-icon>
-      {{ fileName }}
-    </div>
-    <div *ngIf="errorMessage" class="error-message">
-      <mat-icon color="warn">error</mat-icon>
-      {{ errorMessage }}
-    </div>
-  </ng-container>
-
-  <ng-template #successState>
-    <div class="success-checkmark">
-      <svg class="checkmark" viewBox="0 0 52 52">
-        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-        <path class="checkmark__check" fill="none" d="M14 27l7 7 16-16"/>
-      </svg>
-      <p>Файл загружен!</p>
-    </div>
-  </ng-template>
-  <span *ngIf="filePath" class="file-path-span">{{ filePath }}</span>
 </div>

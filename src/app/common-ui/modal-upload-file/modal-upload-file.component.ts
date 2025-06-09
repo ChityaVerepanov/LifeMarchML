@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, inject, Output} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 import {NgClass, NgIf} from '@angular/common';
+import {UploadService} from '../../data/file-upload/services/upload.service';
 
 @Component({
   selector: 'app-modal-upload-file',
@@ -15,7 +16,11 @@ import {NgClass, NgIf} from '@angular/common';
 export class ModalUploadFileComponent {
   @Output() close = new EventEmitter<void>();
   @Output() fileUploaded = new EventEmitter<string>();
+
+  private uploadService = inject(UploadService);
+
   isDragOver = false;
+  isErrorUpload = false;
   fileName: string | null = null;
   fileSelected: boolean = false;
   isFileUploaded = false;
@@ -32,7 +37,7 @@ export class ModalUploadFileComponent {
         this.fileName = file.name;
         this.fileSelected = true;
         this.handleFile(file);
-        this.showSuccessAndClose();
+        this.showMessageAndClose();
       } else {
         this.errorMessage = 'Можно загрузить только Excel-файл (.xls, .xlsx)';
         this.fileName = null;
@@ -52,7 +57,7 @@ export class ModalUploadFileComponent {
         this.fileName = file.name;
         this.fileSelected = true;
         this.handleFile(file);
-        this.showSuccessAndClose();
+        this.showMessageAndClose();
       } else {
         this.errorMessage = 'Можно загрузить только Excel-файл (.xls, .xlsx)';
         this.fileName = null;
@@ -74,11 +79,8 @@ export class ModalUploadFileComponent {
     );
   }
 
-  showSuccessAndClose() {
+  showMessageAndClose() {
     this.isFileUploaded = true;
-    if (this.fileName) {
-      this.fileUploaded.emit(this.fileName);
-    }
     setTimeout(() => this.onClose(), 4000); //таймер на закрытие модалки
   }
 
@@ -99,7 +101,40 @@ export class ModalUploadFileComponent {
 
 
   handleFile(file: File) {
-    // @ts-ignore
-    this.filePath = window.electronAPI?.getPathForFile?.(file) || null;
+    // Отправка файла на сервер
+    this.uploadService.uploadExcelFile(file).subscribe({
+      next: (response) => {
+        this.isErrorUpload = false;
+        this.isFileUploaded = true;
+        this.filePath = 'Файл успешно обработан!';
+        console.log(this.filePath);
+        this.errorMessage = null;
+        if (this.fileName) {
+          this.fileUploaded.emit(this.fileName);
+        }
+      },
+      error: (err) => {
+        this.isFileUploaded = false;
+        this.filePath = null;
+        this.isErrorUpload = true;
+        this.errorMessage = this.getFriendlyError(err);
+        this.fileName = null;
+        console.log(this.errorMessage);
+      }
+    });
+  }
+
+  getFriendlyError(err: any): string {
+    // Ошибка соединения (сервер не запущен)
+    if (err.status === 0 && err.message && err.message.includes('Http failure response')) {
+      return 'Сервер недоступен. Проверьте, что сервер запущен и доступен по адресу http://localhost:8000.';
+    }
+    if (err?.error?.detail) {
+      return 'Ошибка загрузки файла: ' + err.error.detail;
+    }
+    if (err?.message) {
+      return 'Ошибка загрузки файла: ' + err.message;
+    }
+    return 'Неизвестная ошибка при загрузке файла.';
   }
 }

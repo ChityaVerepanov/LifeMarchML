@@ -1,4 +1,10 @@
 <div>
   <app-main-left-block></app-main-left-block>
   <app-main-right-block></app-main-right-block>
+  <button class="btn-help" type="button" (click)="showHelp = true">
+    <mat-icon>help</mat-icon>
+  </button>
+
+  <!-- Модалка -->
+  <app-modal-help *ngIf="showHelp" (close)="showHelp = false"></app-modal-help>
 </div>

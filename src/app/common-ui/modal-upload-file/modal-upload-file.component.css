@@ -1,32 +1,38 @@
 .modal-backdrop {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.1);
+  background: var(--dark-backdrop-color);
   z-index: 1000;
   transition: 0.2s;
 }
 .modal-window {
   display: flex;
   width: 600px;
-  height: 500px;
   position: fixed;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  padding: 2rem;
-  border-radius: 10px;
+  padding: 20px;
+  border-radius: 20px;
   z-index: 1001;
-  background: rgba(255, 255, 255, 0.9); /* полупрозрачный белый */
-  backdrop-filter: blur(10px);           /* размытие фона */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* светлая полупрозрачная рамка */
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* легкая тень */
+  background: rgba(255, 255, 255, 0.20);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   flex-direction: column;
   justify-content: center;
 }
 
+.div-content{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
 .modal-title{
   text-align: center;
-  font-size: 2rem;
-  margin-bottom: 0.5em;
 }
 
 .title-container{
@@ -34,7 +40,11 @@
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: flex-start;
+  background-color: var(--light-color);
+  border-radius: 20px;
   justify-content: center;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .under-title-text{
@@ -42,9 +52,12 @@
   color: var(--dark-gray-color);
   text-wrap: inherit;
   margin-bottom: 1.5em;
+  margin-top: 0;
+  width: 100%;
 }
 
 .btn-close-modal{
+  color: var(--gray-close-btn);
   background: none;
   border: none;
   outline: none;
@@ -55,6 +68,16 @@
   transform: translateY(-50%);
 }
 
+.btn-close-modal:hover{
+  color: var(--dark-color);
+}
+
+.div-dropzone{
+  background-color: var(--light-color);
+  border-radius: 20px;
+  padding: 20px;
+  height: 320px;
+}
 
 .dropzone {
   display: flex;
@@ -64,7 +87,6 @@
   text-align: center;
   background: var(--light-color);
   transition: border-color 0.2s, background 0.2s;
-  margin-bottom: 24px;
   position: relative;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -173,3 +195,40 @@
   font-size: 15px;
 }
 
+.error-checkmark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.crossmark {
+  width: 72px;
+  height: 72px;
+  display: block;
+  stroke-width: 3;
+  stroke: #d32f2f;
+  stroke-miterlimit: 10;
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.crossmark__circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 3;
+  stroke-miterlimit: 10;
+  stroke: #d32f2f;
+  fill: none;
+  animation: stroke 2s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.crossmark__cross {
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  stroke-width: 3;
+  stroke: #d32f2f;
+  fill: none;
+  animation: stroke 2s 0.2s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}

@@ -2,3 +2,36 @@ div{
   display: flex;
   flex-direction: row;
 }
+
+.btn-help {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  padding: 0;
+}
+
+.btn-help:hover {
+  background: var(--light-color);
+}
+
+.btn-help mat-icon {
+  font-size: 24px;
+  color: var(--primary-green-color);
+  line-height: 1;
+}
+
+.btn-help mat-icon:hover {
+  color: var(--hover-green-color);
+}
+
