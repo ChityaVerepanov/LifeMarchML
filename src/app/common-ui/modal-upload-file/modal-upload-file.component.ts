@@ -2,6 +2,7 @@ import {Component, EventEmitter, inject, Output} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 import {NgClass, NgIf} from '@angular/common';
 import {UploadService} from '../../data/file-upload/services/upload.service';
+import {PredictionResult} from '../../data/prediction-result/interfaces/prediction-result';
 
 @Component({
   selector: 'app-modal-upload-file',
@@ -26,6 +27,7 @@ export class ModalUploadFileComponent {
   isFileUploaded = false;
   errorMessage: string | null = null;
   filePath: string | null = null;
+  predictionResults: PredictionResult[] = [];
 
 
   onFileSelected(event: Event) {
@@ -109,6 +111,8 @@ export class ModalUploadFileComponent {
         this.filePath = 'Файл успешно обработан!';
         console.log(this.filePath);
         this.errorMessage = null;
+        this.predictionResults = response;
+        console.log(this.predictionResults);
         if (this.fileName) {
           this.fileUploaded.emit(this.fileName);
         }

@@ -7,7 +7,8 @@ import {Category} from '../interfaces/category';
   providedIn: 'root'
 })
 export class CategoryService {
-  private apiUrl = 'api/categories'; //http://localhost:8080/api/categories
+  //private apiUrl = 'api/categories';
+  private apiUrl = 'http://localhost:8080/api/categories';
 
   constructor(private http: HttpClient) {}
 

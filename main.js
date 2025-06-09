@@ -23,7 +23,7 @@ function createBrowserWindow() {
   });
   browserWindow.loadURL(
     url.format({
-      pathname: path.join(__dirname, "/dist/life-march-ml/browser/index.html"),
+      pathname: path.join(__dirname, "dist/life-march-ml/browser/index.html"),
       protocol: "file:",
       slashes: true,
     })
