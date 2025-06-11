@@ -162,7 +162,7 @@ tfoot td {
 }
 
 .checkmark {
-  width: 30px;
+  min-width: 30px;
   height: 30px;
   border: 1px solid #BDBDBD;
   border-radius: 6px;
