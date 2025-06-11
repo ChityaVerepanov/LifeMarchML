@@ -1,9 +1,10 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, inject, Output, ViewChild} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {Category} from '../../data/categories/interfaces/category';
 import {CategoryService} from '../../data/categories/services/category.service';
 import {debounceTime, distinctUntilChanged, Subject, switchMap} from 'rxjs';
+import {CategoryFilterService} from '../../data/connect-categories-table/category-filter.service';
 
 @Component({
   selector: 'app-filter-food',
@@ -16,6 +17,12 @@ import {debounceTime, distinctUntilChanged, Subject, switchMap} from 'rxjs';
   styleUrl: './filter-food.component.css'
 })
 export class FilterFoodComponent {
+
+  @Output() categoriesChanged = new EventEmitter<string[]>();
+
+  private categoryService = inject(CategoryService);
+  private categoryFilterService = inject(CategoryFilterService);
+
   searchQuery: string = '';
   searchActive = false;
   items: (Category & { checked: boolean })[] = [];
@@ -26,7 +33,6 @@ export class FilterFoodComponent {
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
 
 
-  constructor(private categoryService: CategoryService) {}
 
   ngOnInit() {
     this.loadInitialData();
@@ -59,12 +65,19 @@ export class FilterFoodComponent {
     }));
   }
 
+  private emitSelectedCategories() {
+    const selected = this.items.filter(i => i.checked).map(i => i.name);
+    this.categoriesChanged.emit(selected);
+  }
+
   onSearchInput() {
     this.searchSubject.next(this.searchQuery.trim());
   }
 
   onCheckboxChange(item: Category & { checked: boolean }) {
     this.checkedStates[item.id] = item.checked;
+    const selected = this.items.filter(i => i.checked).map(i => i.name);
+    this.categoryFilterService.setSelectedCategories(selected);
   }
 
   toggleSearch(){

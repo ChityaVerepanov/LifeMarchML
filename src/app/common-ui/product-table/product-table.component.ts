@@ -1,9 +1,10 @@
 import {Component, ElementRef, inject, ViewChild} from '@angular/core';
-import {Product} from '../../data/product';
+import {Product} from '../../data/table/interfaces/product';
 import {DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {TableService} from '../../data/table/services/table.service';
-import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
+import {debounceTime, distinctUntilChanged, Observable, Subject} from 'rxjs';
+import {CategoryFilterService} from '../../data/connect-categories-table/category-filter.service';
 
 @Component({
   selector: 'app-product-table',
@@ -21,6 +22,7 @@ export class ProductTableComponent {
 
   private searchSubject = new Subject<string>();
   private tableService = inject(TableService);
+  private categoryFilterService = inject(CategoryFilterService);
 
   searchQuery: string = '';
   searchActive = false;
@@ -31,8 +33,15 @@ export class ProductTableComponent {
   checkedMap: Record<number, boolean> = {};
   products : Product[] = [];
   allProducts: Product[] = [];
+  selectedCategories: string[] = [];
+  categoryFilteredProducts: Product[] = []
 
   ngOnInit() {
+    this.categoryFilterService.selectedCategories$.subscribe(categories => {
+      this.selectedCategories = categories;
+      this.applyFilters();
+    });
+
     this.tableService.getAllProducts().subscribe({
       next: (data) => {
         this.allProducts = data;
@@ -51,20 +60,51 @@ export class ProductTableComponent {
       debounceTime(250),
       distinctUntilChanged()
     ).subscribe(query => {
-      if (query.trim().length === 0) {
-        // Вернуть все товары с сохранением чекбоксов
-        this.products = this.allProducts.map(p => ({
-          ...p,
-          checked: this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true
-        }));
-      } else {
-        this.tableService.getProductsBySubstring(query).subscribe(data => {
-          this.products = data.map(p => ({
-            ...p,
-            checked: this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true
-          }));
-        });
+      this.searchQuery = query;
+      this.applyFilters();
+    });
+  }
+
+  get isCategoryFilterActive(): boolean {
+    return this.selectedCategories && this.selectedCategories.length > 0;
+  }
+
+  applyFilters() {
+    const categories = this.selectedCategories;
+    const search = this.searchQuery.trim().toLowerCase();
+
+    let source$: Observable<Product[]>;
+    if (!categories || categories.length === 0) {
+      source$ = this.tableService.getAllProducts();
+    } else {
+      source$ = this.tableService.getProductsByCategories(categories);
+    }
+
+    source$.subscribe(data => {
+      // Сохраняем все товары после фильтра по категориям
+      this.categoryFilteredProducts = data.map(p => ({
+        ...p,
+        checked: this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true
+      }));
+
+      // Применяем поиск только для отображения
+      let filtered = this.categoryFilteredProducts;
+      if (search) {
+        filtered = filtered.filter(product =>
+          product.name.toLowerCase().includes(search)
+        );
       }
+      this.products = filtered;
+    });
+  }
+
+  onCategoriesChanged(categories: string[]) {
+    this.selectedCategories = categories;
+    this.tableService.getProductsByCategories(categories).subscribe(data => {
+      this.products = data.map(p => ({
+        ...p,
+        checked: this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true
+      }));
     });
   }
 
@@ -137,11 +177,8 @@ export class ProductTableComponent {
   onSearchKeydown(event: KeyboardEvent) {
     if (event.key === 'Escape' || event.key === 'Esc') {
       this.searchActive = false;
-      // Вернуть все товары с сохранением чекбоксов
-      this.products = this.allProducts.map(p => ({
-        ...p,
-        checked: this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true
-      }));
+      this.searchQuery = '';
+      this.applyFilters();
     }
   }
 
@@ -156,13 +193,13 @@ export class ProductTableComponent {
   }
 
   get totalQuantity(): number {
-    return this.allProducts
+    return this.categoryFilteredProducts
       .filter(p => this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true)
       .reduce((sum, p) => sum + (p.quantityBuy || 0), 0);
   }
 
   get totalPrice(): number {
-    return this.allProducts
+    return this.categoryFilteredProducts
       .filter(p => this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true)
       .reduce((sum, p) => sum + (p.costPrice || 0), 0);
   }
