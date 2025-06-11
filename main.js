@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require("electron");
+const { app, BrowserWindow, globalShortcut } = require("electron");
 const path = require("path");
 const url = require("url");
 let browserWindow;
@@ -8,18 +8,18 @@ function createBrowserWindow() {
     width: 1400,
     height: 900,
     webPreferences: {
-      webSecurity: false, // отключаем CORS-политику
+      webSecurity: false,
       nodeIntegration: false,
       contextIsolation: true,
-      preload: path.join(__dirname, 'preload.js') // путь к preload.js
+      preload: path.join(__dirname, 'preload.js')
     }
   });
-  browserWindow.webContents.setWindowOpenHandler(({ url }) => {
+  browserWindow.webContents.setWindowOpenHandler(({url}) => {
     if (url.startsWith('http')) {
       require('electron').shell.openExternal(url);
-      return { action: 'deny' };
+      return {action: 'deny'};
     }
-    return { action: 'allow' };
+    return {action: 'allow'};
   });
   browserWindow.loadURL(
     url.format({
@@ -31,9 +31,35 @@ function createBrowserWindow() {
   browserWindow.on("closed", () => {
     browserWindow = null;
   });
+  browserWindow.webContents.on('will-navigate', (event, url) => {
+    // Если пользователь случайно попал на /browser/, перенаправляем на index.html
+    if (url.endsWith('/browser/') || url.endsWith('/browser')) {
+      event.preventDefault();
+      browserWindow.loadURL(
+        url.format({
+          pathname: path.join(__dirname, "dist/life-march-ml/browser/index.html"),
+          protocol: "file:",
+          slashes: true,
+        })
+      );
+    }
+  });
 }
 
-app.on("ready", createBrowserWindow);
+app.on('ready', () => {
+  createBrowserWindow();
+  globalShortcut.register('CommandOrControl+R', () => {
+    if (browserWindow) {
+      browserWindow.loadURL(
+        url.format({
+          pathname: path.join(__dirname, "dist/life-march-ml/browser/index.html"),
+          protocol: "file:",
+          slashes: true,
+        })
+      );
+    }
+  });
+});
 app.on("activate", () => {
   if (browserWindow === null) {
     createBrowserWindow();

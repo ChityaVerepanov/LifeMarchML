@@ -12,11 +12,11 @@
             type="text"
             class="search-input"
             placeholder="Начните вводить..."
-            [(ngModel)]="searchQuery"
+            (input)="onSearchInput($event)"
             (keydown)="onSearchKeydown($event)"
           >
           <button class="search-btn" (click)="toggleSearch()">
-            <img class="icon" src="assets/svg/search-icon.svg" alt="Найти">
+            <img class="icon" src="assets/svg/search-icon1.svg" alt="Найти">
             Поиск
           </button>
         </div>
@@ -55,12 +55,12 @@
       </td>
       <td>
         <div class="table-list-flex">
-          {{ product.quantity }}
+          {{ product.quantityBuy }}
         </div>
       </td>
       <td>
         <div class="table-list-flex">
-          {{ product.price }}
+          {{ product.costPrice }}
         </div>
       </td>
     </tr>

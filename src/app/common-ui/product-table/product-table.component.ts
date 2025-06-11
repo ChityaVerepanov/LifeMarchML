@@ -1,7 +1,9 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, inject, ViewChild} from '@angular/core';
 import {Product} from '../../data/product';
 import {DecimalPipe, NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {TableService} from '../../data/table/services/table.service';
+import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
 
 @Component({
   selector: 'app-product-table',
@@ -17,19 +19,56 @@ import {FormsModule} from '@angular/forms';
 export class ProductTableComponent {
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
 
+  private searchSubject = new Subject<string>();
+  private tableService = inject(TableService);
+
   searchQuery: string = '';
   searchActive = false;
   isDragging = false;
   dragValue = false;
   dragStarted = false;
 
+  checkedMap: Record<number, boolean> = {};
+  products : Product[] = [];
+
+  ngOnInit() {
+    this.tableService.getAllProducts().subscribe({
+      next: (data) => {
+        this.products = data.map(p => ({
+          ...p,
+          checked: this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true
+        }));
+
+      },
+      error: (err) => {
+        // обработка ошибки
+        this.products = [];
+      }
+    });
+
+    // Подписка на изменения поискового запроса
+    this.searchSubject.pipe(
+      debounceTime(250),
+      distinctUntilChanged()
+    ).subscribe(query => {
+      if (query.trim().length === 0) {
+        // Если строка пустая — вернуть все товары
+        this.tableService.getAllProducts().subscribe(data => {
+          this.products = data.map(p => ({ ...p, checked: true }));
+        });
+      } else {
+        this.tableService.getProductsBySubstring(query).subscribe(data => {
+          this.products = data.map(p => ({ ...p, checked: true }));
+        });
+      }
+    });
+  }
+
   onCheckboxClick(event: MouseEvent, product: any) {
-    // Если не в режиме drag, обычное переключение чекбокса
     if (!this.isDragging) {
       product.checked = !product.checked;
-    }
-    // Если drag, предотвращаем стандартный клик
-    else {
+      this.checkedMap[product.id] = product.checked;
+    } else {
       event.preventDefault();
     }
   }
@@ -86,9 +125,21 @@ export class ProductTableComponent {
     }
   }
 
+  onSearchInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.searchSubject.next(value);
+  }
+
   onSearchKeydown(event: KeyboardEvent) {
     if (event.key === 'Escape' || event.key === 'Esc') {
       this.searchActive = false;
+      // Сброс поиска и повторная загрузка всех товаров с сохранением состояния чекбоксов
+      this.tableService.getAllProducts().subscribe(data => {
+        this.products = data.map(p => ({
+          ...p,
+          checked: this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true
+        }));
+      });
     }
   }
 
@@ -102,46 +153,16 @@ export class ProductTableComponent {
     );
   }
 
-
-  @Input() products: Product[] = [
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-    { name: 'Онигири с рыбой', quantity: 5, price: 250, checked: true },
-  ];
-
   get totalQuantity(): number {
     const checkedProducts = this.products.filter(p => p.checked);
     return checkedProducts.length === 0
       ? 0
-      : checkedProducts.reduce((sum, p) => sum + p.quantity, 0);
+      : checkedProducts.reduce((sum, p) => sum + (p.quantityBuy || 0), 0);
   }
 
   get totalPrice(): number {
     return this.products
       .filter(product => product.checked)
-      .reduce((sum, product) => sum + product.price, 0);
+      .reduce((sum, product) => sum + (product.costPrice || 0), 0);
   }
 }

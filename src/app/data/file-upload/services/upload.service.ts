@@ -1,12 +1,13 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
+import {ApiConfigService} from '../../api-config/api-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
-  private apiUrl = 'http://localhost:8000/predict';
+  private apiUrl = inject(ApiConfigService).baseFileUploadUrl;
 
   private http = inject(HttpClient);
 

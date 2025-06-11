@@ -19,3 +19,11 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+window.addEventListener('keydown', (event) => {
+  if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'r') {
+    event.preventDefault();
+    // Принудительно всегда возвращаем пользователя на index.html#/
+    window.location.href = 'index.html#/';
+  }
+});

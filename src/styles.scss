@@ -51,7 +51,7 @@ html {
 
 body{
   font-family: 'JetBrains Mono', sans-serif;
-  background: url(/assets/svg/background.svg) no-repeat, var(--primary-yellow-color);
+  background: url(./assets/svg/background.svg) no-repeat, var(--primary-yellow-color);
   background-size: cover;
 }
 
@@ -82,5 +82,3 @@ tui-dropdown {
   z-index: 2 !important;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

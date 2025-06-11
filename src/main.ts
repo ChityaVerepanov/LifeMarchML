@@ -4,3 +4,8 @@ import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
+
+if (window.location.pathname.endsWith('/browser/') || window.location.pathname.endsWith('/browser')) {
+  window.location.replace('index.html#/');
+}
+

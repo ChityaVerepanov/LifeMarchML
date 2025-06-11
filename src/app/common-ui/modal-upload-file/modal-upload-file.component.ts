@@ -2,7 +2,7 @@ import {Component, EventEmitter, inject, Output} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 import {NgClass, NgIf} from '@angular/common';
 import {UploadService} from '../../data/file-upload/services/upload.service';
-import {PredictionResult} from '../../data/prediction-result/interfaces/prediction-result';
+import {PredictionResult} from '../../data/file-upload/interfaces/prediction-result';
 
 @Component({
   selector: 'app-modal-upload-file',

@@ -1,6 +1,10 @@
+import {Category} from './categories/interfaces/category';
+
 export interface Product {
+  id: number;
   name: string;
-  quantity: number;
-  price: number;
-  checked: boolean;
+  quantityBuy: number;
+  costPrice: number;
+  category: Category;
+  checked?: boolean;
 }
