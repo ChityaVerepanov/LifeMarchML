@@ -1,7 +1,8 @@
 const { contextBridge, webUtils, shell } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  getPathForFile: (file) => webUtils.getPathForFile(file)
+  getPathForFile: (file) => webUtils.getPathForFile(file),
+  isElectron: true
 });
 
 window.addEventListener('DOMContentLoaded', () => {
