@@ -1,6 +1,7 @@
-const { app, BrowserWindow, globalShortcut } = require("electron");
+const { app, BrowserWindow, globalShortcut, Menu } = require("electron");
 const path = require("path");
 const url = require("url");
+const isMac = process.platform === 'darwin';
 let browserWindow;
 
 function createBrowserWindow() {
@@ -14,6 +15,51 @@ function createBrowserWindow() {
       preload: path.join(__dirname, 'preload.js')
     }
   });
+
+  // --- Меню ---
+  const template = [
+    // App menu для macOS
+    ...(isMac ? [{
+      label: app.name,
+      submenu: [
+        { role: 'about' },
+        { type: 'separator' },
+        { role: 'quit' } // <-- пункт выхода
+      ]
+    }] : []),
+    {
+      label: 'View',
+      submenu: [
+        {
+          label: 'Reload',
+          accelerator: 'CmdOrCtrl+R',
+          click: () => {
+            if (browserWindow) {
+              browserWindow.loadURL(
+                url.format({
+                  pathname: path.join(__dirname, "dist/life-march-ml/browser/index.html"),
+                  protocol: "file:",
+                  slashes: true,
+                })
+              );
+            }
+          }
+        },
+        // ... другие пункты меню
+      ]
+    },
+    // File menu для Windows/Linux
+    ...(!isMac ? [{
+      label: 'File',
+      submenu: [
+        { role: 'quit' } // <-- пункт выхода
+      ]
+    }] : [])
+  ];
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+  // --- конец меню ---
+
   browserWindow.webContents.setWindowOpenHandler(({url}) => {
     if (url.startsWith('http')) {
       require('electron').shell.openExternal(url);
@@ -32,8 +78,22 @@ function createBrowserWindow() {
     browserWindow = null;
   });
   browserWindow.webContents.on('will-navigate', (event, url) => {
-    // Если пользователь случайно попал на /browser/, перенаправляем на index.html
     if (url.endsWith('/browser/') || url.endsWith('/browser')) {
+      event.preventDefault();
+      browserWindow.loadURL(
+        url.format({
+          pathname: path.join(__dirname, "dist/life-march-ml/browser/index.html"),
+          protocol: "file:",
+          slashes: true,
+        })
+      );
+    }
+  });
+  browserWindow.webContents.on('before-input-event', (event, input) => {
+    if (
+      (input.control || input.meta) &&
+      input.key.toLowerCase() === 'r'
+    ) {
       event.preventDefault();
       browserWindow.loadURL(
         url.format({
@@ -70,4 +130,3 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
-
