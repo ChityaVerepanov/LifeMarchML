@@ -30,35 +30,39 @@ export class ProductTableComponent {
 
   checkedMap: Record<number, boolean> = {};
   products : Product[] = [];
+  allProducts: Product[] = [];
 
   ngOnInit() {
     this.tableService.getAllProducts().subscribe({
       next: (data) => {
+        this.allProducts = data;
         this.products = data.map(p => ({
           ...p,
           checked: this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true
         }));
-
       },
       error: (err) => {
-        // обработка ошибки
         this.products = [];
+        this.allProducts = [];
       }
     });
 
-    // Подписка на изменения поискового запроса
     this.searchSubject.pipe(
       debounceTime(250),
       distinctUntilChanged()
     ).subscribe(query => {
       if (query.trim().length === 0) {
-        // Если строка пустая — вернуть все товары
-        this.tableService.getAllProducts().subscribe(data => {
-          this.products = data.map(p => ({ ...p, checked: true }));
-        });
+        // Вернуть все товары с сохранением чекбоксов
+        this.products = this.allProducts.map(p => ({
+          ...p,
+          checked: this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true
+        }));
       } else {
         this.tableService.getProductsBySubstring(query).subscribe(data => {
-          this.products = data.map(p => ({ ...p, checked: true }));
+          this.products = data.map(p => ({
+            ...p,
+            checked: this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true
+          }));
         });
       }
     });
@@ -133,13 +137,11 @@ export class ProductTableComponent {
   onSearchKeydown(event: KeyboardEvent) {
     if (event.key === 'Escape' || event.key === 'Esc') {
       this.searchActive = false;
-      // Сброс поиска и повторная загрузка всех товаров с сохранением состояния чекбоксов
-      this.tableService.getAllProducts().subscribe(data => {
-        this.products = data.map(p => ({
-          ...p,
-          checked: this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true
-        }));
-      });
+      // Вернуть все товары с сохранением чекбоксов
+      this.products = this.allProducts.map(p => ({
+        ...p,
+        checked: this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true
+      }));
     }
   }
 
@@ -154,15 +156,14 @@ export class ProductTableComponent {
   }
 
   get totalQuantity(): number {
-    const checkedProducts = this.products.filter(p => p.checked);
-    return checkedProducts.length === 0
-      ? 0
-      : checkedProducts.reduce((sum, p) => sum + (p.quantityBuy || 0), 0);
+    return this.allProducts
+      .filter(p => this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true)
+      .reduce((sum, p) => sum + (p.quantityBuy || 0), 0);
   }
 
   get totalPrice(): number {
-    return this.products
-      .filter(product => product.checked)
-      .reduce((sum, product) => sum + (product.costPrice || 0), 0);
+    return this.allProducts
+      .filter(p => this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true)
+      .reduce((sum, p) => sum + (p.costPrice || 0), 0);
   }
 }
