@@ -263,3 +263,11 @@ tfoot td {
   background: inherit;
 }
 
+/* Сделать второй и третий столбец шире */
+th:nth-child(2), td:nth-child(2) {
+  width: 200px; /* или другое нужное значение */
+}
+
+th:nth-child(3), td:nth-child(3) {
+  width: 200px; /* или другое нужное значение */
+}
