@@ -279,6 +279,11 @@ td:nth-child(3) {
   background-color: var(--primary-green-color);
 }
 
+.category-badge{
+  color: var(--primary-green-color);
+}
+
+
 .name-and-button {
   display: flex;
   align-items: center;

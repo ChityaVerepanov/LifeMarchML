@@ -9,6 +9,7 @@
     <h3>
       <div class="modal-title">Аналитика</div>
       <div class="product-name" *ngIf="product">({{ product.name }})</div>
+      <div class="category-name" *ngIf="product">{{ product.category.name }}</div>
     </h3>
     <p>Вы можете перетащить это окно в удобное для вас место за полоску в верхней части окна. Для того чтобы построить графики <i>загружайте больше
       файлов.</i></p>
