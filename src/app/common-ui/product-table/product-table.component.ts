@@ -33,17 +33,20 @@ export class ProductTableComponent {
   isDragging = false;
   dragValue = false;
   dragStarted = false;
-
   showModal: boolean = false;
   modalProduct: any = null;
   modalTop: number = 0;
   modalLeft: number = 0;
 
+  sortColumn: 'quantityBuy' | 'costPrice' | null = null;
+  sortDirection: 'asc' | 'desc' | null = null;
+
   checkedMap: Record<number, boolean> = {};
-  products : Product[] = [];
+  products: Product[] = [];
   allProducts: Product[] = [];
   selectedCategories: string[] = [];
   categoryFilteredProducts: Product[] = []
+  originalProducts: Product[] = [];
 
   ngOnInit() {
     this.categoryFilterService.selectedCategories$.subscribe(categories => {
@@ -103,7 +106,9 @@ export class ProductTableComponent {
           product.name.toLowerCase().includes(search)
         );
       }
-      this.products = filtered;
+      this.originalProducts = [...filtered];
+      this.products = [...filtered];
+      this.applySort();
     });
   }
 
@@ -225,5 +230,37 @@ export class ProductTableComponent {
   closeModal() {
     this.showModal = false;
     this.modalProduct = null;
+  }
+
+  sortBy(column: 'quantityBuy' | 'costPrice') {
+    if (this.sortColumn === column) {
+      if (this.sortDirection === 'asc') {
+        this.sortDirection = 'desc';
+      } else if (this.sortDirection === 'desc') {
+        // Третий клик — сброс сортировки
+        this.sortColumn = null;
+        this.sortDirection = null;
+      }
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+    this.applySort();
+  }
+
+
+
+  applySort() {
+    if (!this.sortColumn || !this.sortDirection) {
+      // Если сортировка сброшена — возвращаем исходный порядок
+      this.products = [...this.originalProducts];
+      return;
+    }
+    // Сортируем копию исходного массива
+    this.products = [...this.originalProducts].sort((a, b) => {
+      return this.sortDirection === 'asc'
+        ? a[this.sortColumn!] - b[this.sortColumn!]
+        : b[this.sortColumn!] - a[this.sortColumn!];
+    });
   }
 }

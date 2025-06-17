@@ -302,3 +302,23 @@ th:nth-child(3), td:nth-child(3) {
 .graph-button:hover .btn-open-graphs {
   color: var(--light-color);
 }
+
+.table-title-flex {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.sort-icon {
+  display: flex;
+  align-items: center;
+}
+
+.sort-icon mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+

@@ -22,13 +22,23 @@
         </div>
       </th>
       <th>
-        <div class="table-title-flex">
+        <div class="table-title-flex" (click)="sortBy('quantityBuy')">
           Кол-во товаров (шт)
+          <span class="sort-icon">
+      <mat-icon *ngIf="sortColumn === 'quantityBuy'">
+        {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+      </mat-icon>
+    </span>
         </div>
       </th>
       <th>
-        <div class="table-title-flex">
+        <div class="table-title-flex" (click)="sortBy('costPrice')">
           Стоимость (руб)
+          <span class="sort-icon">
+      <mat-icon *ngIf="sortColumn === 'costPrice'">
+        {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+      </mat-icon>
+    </span>
         </div>
       </th>
     </tr>
