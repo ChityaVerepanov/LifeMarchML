@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {catchError, Observable, throwError} from 'rxjs';
+import {catchError, Observable, Subject, throwError} from 'rxjs';
 import {ApiConfigService} from '../../api-config/api-config.service';
 
 @Injectable({
@@ -8,8 +8,15 @@ import {ApiConfigService} from '../../api-config/api-config.service';
 })
 export class UploadService {
   private apiUrl = inject(ApiConfigService).baseFileUploadUrl;
+  private fileUploadedSubject = new Subject<string>();
 
   private http = inject(HttpClient);
+
+  fileUploaded$ = this.fileUploadedSubject.asObservable();
+
+  notifyFileUploaded(fileName: string) {
+    this.fileUploadedSubject.next(fileName);
+  }
 
   uploadExcelFile(file: File): Observable<any> {
     const formData = new FormData();

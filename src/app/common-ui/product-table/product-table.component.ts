@@ -7,6 +7,7 @@ import {debounceTime, distinctUntilChanged, Observable, Subject} from 'rxjs';
 import {CategoryFilterService} from '../../data/connect-categories-table/category-filter.service';
 import {ProductGraphModalComponent} from '../product-graph-modal/product-graph-modal.component';
 import {MatIcon} from '@angular/material/icon';
+import {UploadService} from '../../data/file-upload/services/upload.service';
 
 @Component({
   selector: 'app-product-table',
@@ -27,6 +28,7 @@ export class ProductTableComponent {
   private searchSubject = new Subject<string>();
   private tableService = inject(TableService);
   private categoryFilterService = inject(CategoryFilterService);
+  private uploadService = inject(UploadService);
 
   searchQuery: string = '';
   searchActive = false;
@@ -75,7 +77,29 @@ export class ProductTableComponent {
       this.searchQuery = query;
       this.applyFilters();
     });
+    this.uploadService.fileUploaded$.subscribe(fileName => {
+      this.refreshProducts(); // Обновить товары после загрузки файла
+    });
   }
+
+  refreshProducts() {
+    this.tableService.getAllProducts().subscribe({
+      next: (data) => {
+        this.allProducts = data;
+        this.products = data.map(p => ({
+          ...p,
+          checked: this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true
+        }));
+        this.applyFilters(); // если есть фильтрация
+      },
+      error: (err) => {
+        this.products = [];
+        this.allProducts = [];
+      }
+    });
+  }
+
+
 
   get isCategoryFilterActive(): boolean {
     return this.selectedCategories && this.selectedCategories.length > 0;

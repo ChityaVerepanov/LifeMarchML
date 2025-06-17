@@ -15,7 +15,7 @@ table {
   border-spacing: 0;
 }
 
-tbody tr{
+tbody tr {
   position: relative;
 }
 
@@ -31,7 +31,6 @@ tbody tr::after {
   margin: 0 auto;
   pointer-events: none;
 }
-
 
 tbody tr:last-child::after {
   display: none;
@@ -72,7 +71,9 @@ th {
   justify-content: center;
   width: 100%;
   height: 100%;
-  gap: 16px;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
 }
 
 .search-input {
@@ -108,7 +109,6 @@ th {
   }
 }
 
-
 .search-btn {
   display: flex;
   align-items: center;
@@ -137,12 +137,10 @@ th {
   display: block;
 }
 
-
 tfoot td {
   background: #fafafa;
   font-weight: bold;
 }
-
 
 .custom-checkbox {
   display: flex;
@@ -197,7 +195,6 @@ tfoot td {
   opacity: 1;
 }
 
-
 .sticky-header th {
   padding: 16px;
   position: sticky;
@@ -205,20 +202,6 @@ tfoot td {
   z-index: 3;
   background: var(--light-color);
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-
-}
-
-.table-list-flex{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: nowrap;
-}
-
-.table-list-flex-end{
-  display: flex;
-  padding-right: 15px;
-  justify-content: flex-end;
 }
 
 .sticky-header th::after {
@@ -233,6 +216,18 @@ tfoot td {
   z-index: 10;
 }
 
+.table-list-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.table-list-flex-end {
+  display: flex;
+  padding-right: 15px;
+  justify-content: flex-end;
+}
 
 .sticky-footer td {
   position: sticky;
@@ -254,20 +249,13 @@ tfoot td {
   z-index: 10;
 }
 
-
-.sticky-footer-divider {
-  position: sticky;
-  bottom: 48px;
-  z-index: 2;
-  background: inherit;
-}
-
-
-th:nth-child(2), td:nth-child(2) {
+th:nth-child(2),
+td:nth-child(2) {
   width: 200px;
 }
 
-th:nth-child(3), td:nth-child(3) {
+th:nth-child(3),
+td:nth-child(3) {
   width: 200px;
 }
 
@@ -278,21 +266,20 @@ th:nth-child(3), td:nth-child(3) {
   background: none;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: 0.2s;
   margin-right: 20px;
   border: 1px solid var(--dark-color);
+  transition: border 0.2s, background-color 0.2s;
 }
+
 .graph-button:hover {
-  transition: 0.2s;
   border: 1px solid var(--primary-green-color);
   background-color: var(--primary-green-color);
 }
 
-.name-and-button{
+.name-and-button {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -301,14 +288,6 @@ th:nth-child(3), td:nth-child(3) {
 
 .graph-button:hover .btn-open-graphs {
   color: var(--light-color);
-}
-
-.table-title-flex {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  user-select: none;
 }
 
 .sort-icon {
@@ -321,4 +300,3 @@ th:nth-child(3), td:nth-child(3) {
   width: 18px;
   height: 18px;
 }
-

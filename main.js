@@ -58,7 +58,7 @@ function createBrowserWindow() {
   ];
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
-  // --- конец меню ---
+// --- конец меню ---
 
   browserWindow.webContents.setWindowOpenHandler(({url}) => {
     if (url.startsWith('http')) {

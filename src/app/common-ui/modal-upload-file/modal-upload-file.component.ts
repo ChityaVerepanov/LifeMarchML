@@ -116,6 +116,7 @@ export class ModalUploadFileComponent {
         if (this.fileName) {
           this.fileUploaded.emit(this.fileName);
         }
+        this.uploadService.notifyFileUploaded(this.fileName!);
       },
       error: (err) => {
         this.isFileUploaded = false;
