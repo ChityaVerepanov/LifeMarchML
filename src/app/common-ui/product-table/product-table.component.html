@@ -36,22 +36,30 @@
 
     <!-- Основное содержимое -->
     <tbody>
-    <tr *ngFor="let product of filteredProducts">
+    <tr
+      *ngFor="let product of filteredProducts">
       <td class="table-list-name">
-        <label class="custom-checkbox"
-               (mousedown)="onCheckboxMouseDown($event, product)"
-               (mouseenter)="onCheckboxMouseEnter($event, product)"
-               (mouseup)="onCheckboxMouseUp()"
-               [class.dragging]="isDragging"
-        >
-          <input
-            type="checkbox"
-            [(ngModel)]="product.checked"
-            (click)="onCheckboxClick($event, product)"
-          />
-          <span class="checkmark"></span>
-          {{ product.name }}
-        </label>
+        <div class="name-and-button">
+          <label class="custom-checkbox"
+                 (mousedown)="onCheckboxMouseDown($event, product)"
+                 (mouseenter)="onCheckboxMouseEnter($event, product)"
+                 (mouseup)="onCheckboxMouseUp()"
+                 [class.dragging]="isDragging">
+            <input
+              type="checkbox"
+              [(ngModel)]="product.checked"
+              (click)="onCheckboxClick($event, product)"
+            />
+            <span class="checkmark"></span>
+            {{ product.name }}
+          </label>
+          <button
+            class="graph-button"
+            (click)="onGraphButtonClick($event, product)"
+            title="Показать графики">
+            <mat-icon class="btn-open-graphs">query_stats</mat-icon>
+          </button>
+        </div>
       </td>
       <td>
         <div class="table-list-flex">
@@ -88,3 +96,11 @@
     </tfoot>
   </table>
 </div>
+
+<app-product-graph-modal
+  *ngIf="showModal"
+  [product]="modalProduct"
+  [top]="modalTop"
+  [left]="modalLeft"
+  (onClose)="closeModal()"
+></app-product-graph-modal>

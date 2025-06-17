@@ -1,0 +1,34 @@
+<div class="graph-modal" [style.top.px]="top" [style.left.px]="left">
+  <div class="modal-header" (mousedown)="startDrag($event)">
+    <div class="drag-bar"></div>
+    <button class="btn-close-modal" (click)="onClose.emit()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div>
+    <h3>
+      <div>Аналитика</div>
+      <div class="product-name" *ngIf="product">({{ product.name }})</div>
+    </h3>
+    <p>Вы можете перетащить это окно в удобное для вас место за полоску в верхней части окна. Для того чтобы построить графики <i>загружайте больше
+      файлов.</i></p>
+  </div>
+  <div class="graph-box">
+
+  </div>
+  <div class="switch-graph">
+    <div class="switch-item" (click)="selectGraph('revenue')" [class.active]="selectedGraph === 'revenue'">
+      <span>Выручка</span>
+      <div class="underline"></div>
+    </div>
+    <div class="switch-item" (click)="selectGraph('sales')" [class.active]="selectedGraph === 'sales'">
+      <span>Кол-во продаж</span>
+      <div class="underline"></div>
+    </div>
+    <div class="switch-item" (click)="selectGraph('write-offs')" [class.active]="selectedGraph === 'write-offs'">
+      <span>Списания</span>
+      <div class="underline"></div>
+    </div>
+  </div>
+</div>
+

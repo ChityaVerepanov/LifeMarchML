@@ -20,7 +20,7 @@
   padding: 32px 24px 24px 24px;
   min-width: 620px;
   max-width: 90vw;
-  min-height: 620px;
+  min-height: 690px;
   max-height: 80vh;
   box-shadow: 0 8px 32px rgba(0,0,0,0.18);
   position: relative;
@@ -145,6 +145,7 @@
   border-radius: 20px;
   padding: 10px 0;
   transition: 0.3s;
+  height: 2.7em;
   width: 100%;
 }
 
@@ -154,7 +155,7 @@
 }
 
 .logo-svg {
-  width: 50px;
+  width: 40%;
   height: auto;
   display: block;
   transition: fill 0.3s;

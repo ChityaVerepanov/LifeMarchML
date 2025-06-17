@@ -1,0 +1,131 @@
+.graph-modal {
+  position: fixed;
+  z-index: 1000;
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  min-width: 200px;
+  max-width: 650px;
+}
+
+.modal-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #eee;
+  margin-bottom: 12px;
+  cursor: default;
+  user-select: none;
+  width: 100%;
+  height: 32px;
+}
+
+.drag-bar {
+  width: 18%;
+  height: 6px;
+  background: #ccc;
+  border-radius: 3px;
+  cursor: move;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: background 0.2s;
+}
+
+.drag-bar:hover {
+  background: var(--primary-green-color);
+}
+
+h3{
+  font-size: 24px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.header-icon{
+  font-size: 100%;
+  margin-left: 8px;
+  color: var(--primary-green-color);
+}
+
+.graph-box {
+  border-radius: 4px;
+  display: flex;
+  width: 100%;
+  height: 50px;
+  background-color: var(--primary-green-color);
+}
+
+.btn-close-modal{
+  color: var(--gray-close-btn);
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: absolute;
+  right: 5px;
+  top: 8px;
+  transform: translateY(-50%);
+}
+
+.btn-close-modal:hover{
+  color: var(--primary-green-color);
+}
+
+.switch-graph {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.switch-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.switch-item span {
+  font-weight: 400;
+  transition: font-weight 0.2s;
+}
+
+.switch-item.active span {
+  font-weight: 1000;
+  color: var(--primary-green-color);
+}
+
+.underline {
+  width: 10px;
+  height: 3px;
+  background: black;
+  margin-top: 8px;
+  transition: width 0.2s;
+  border-radius: 3px;
+}
+
+.switch-item.active .underline {
+  width: 120%;
+  background-color: var(--primary-green-color);
+}
+
+.product-name {
+  font-size: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  color: var(--primary-green-color);
+}
+
+

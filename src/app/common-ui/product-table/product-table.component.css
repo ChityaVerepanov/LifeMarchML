@@ -1,5 +1,5 @@
 .table-container {
-  height: 84vh;
+  height: 93vh;
   width: 60vw;
   overflow: auto;
   padding: 0;
@@ -23,9 +23,9 @@ tbody tr::after {
   content: "";
   position: absolute;
   left: 0;
-  right: 0;
+  right: -50px;
   bottom: 0;
-  width: 90%;
+  width: 93%;
   height: 1px;
   background: #e0e0e0;
   margin: 0 auto;
@@ -34,7 +34,7 @@ tbody tr::after {
 
 
 tbody tr:last-child::after {
-  display: none; /* Не показывать линию под последней строкой */
+  display: none;
 }
 
 th, td {
@@ -108,7 +108,7 @@ th {
   }
 }
 
-/* Кнопка поиска */
+
 .search-btn {
   display: flex;
   align-items: center;
@@ -137,13 +137,13 @@ th {
   display: block;
 }
 
-/* Итоговая строка */
+
 tfoot td {
   background: #fafafa;
   font-weight: bold;
 }
 
-/* Кастомный чекбокс */
+
 .custom-checkbox {
   display: flex;
   align-items: center;
@@ -197,7 +197,7 @@ tfoot td {
   opacity: 1;
 }
 
-/* Липкий заголовок */
+
 .sticky-header th {
   padding: 16px;
   position: sticky;
@@ -205,7 +205,7 @@ tfoot td {
   z-index: 3;
   background: var(--light-color);
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-  /* Для псевдоэлемента линии */
+
 }
 
 .table-list-flex{
@@ -233,14 +233,13 @@ tfoot td {
   z-index: 10;
 }
 
-/* Липкий подвал */
+
 .sticky-footer td {
   position: sticky;
   bottom: 0;
   z-index: 3;
   background: var(--light-color);
   box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
-  /* Для псевдоэлемента линии */
 }
 
 .sticky-footer td::before {
@@ -255,19 +254,51 @@ tfoot td {
   z-index: 10;
 }
 
-/* Липкая разделительная линия перед подвалом */
+
 .sticky-footer-divider {
   position: sticky;
-  bottom: 48px; /* Высота подвала */
+  bottom: 48px;
   z-index: 2;
   background: inherit;
 }
 
-/* Сделать второй и третий столбец шире */
+
 th:nth-child(2), td:nth-child(2) {
-  width: 200px; /* или другое нужное значение */
+  width: 200px;
 }
 
 th:nth-child(3), td:nth-child(3) {
-  width: 200px; /* или другое нужное значение */
+  width: 200px;
+}
+
+.graph-button {
+  flex-shrink: 0;
+  width: 35px;
+  height: 35px;
+  background: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+  margin-right: 20px;
+  border: 1px solid var(--dark-color);
+}
+.graph-button:hover {
+  transition: 0.2s;
+  border: 1px solid var(--primary-green-color);
+  background-color: var(--primary-green-color);
+}
+
+.name-and-button{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.graph-button:hover .btn-open-graphs {
+  color: var(--light-color);
 }

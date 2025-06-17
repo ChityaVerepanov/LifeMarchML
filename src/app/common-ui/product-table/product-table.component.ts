@@ -5,6 +5,8 @@ import {FormsModule} from '@angular/forms';
 import {TableService} from '../../data/table/services/table.service';
 import {debounceTime, distinctUntilChanged, Observable, Subject} from 'rxjs';
 import {CategoryFilterService} from '../../data/connect-categories-table/category-filter.service';
+import {ProductGraphModalComponent} from '../product-graph-modal/product-graph-modal.component';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-product-table',
@@ -12,7 +14,9 @@ import {CategoryFilterService} from '../../data/connect-categories-table/categor
     NgForOf,
     FormsModule,
     NgIf,
-    DecimalPipe
+    DecimalPipe,
+    ProductGraphModalComponent,
+    MatIcon
   ],
   templateUrl: './product-table.component.html',
   styleUrl: './product-table.component.css'
@@ -29,6 +33,11 @@ export class ProductTableComponent {
   isDragging = false;
   dragValue = false;
   dragStarted = false;
+
+  showModal: boolean = false;
+  modalProduct: any = null;
+  modalTop: number = 0;
+  modalLeft: number = 0;
 
   checkedMap: Record<number, boolean> = {};
   products : Product[] = [];
@@ -202,5 +211,19 @@ export class ProductTableComponent {
     return this.categoryFilteredProducts
       .filter(p => this.checkedMap[p.id] !== undefined ? this.checkedMap[p.id] : true)
       .reduce((sum, p) => sum + (p.costPrice || 0), 0);
+  }
+
+  onGraphButtonClick(event: MouseEvent, product: any) {
+    event.stopPropagation(); // чтобы не срабатывали другие клики
+    this.modalProduct = product;
+    this.showModal = true;
+    const rect = (event.target as HTMLElement).getBoundingClientRect();
+    this.modalTop = rect.top + window.scrollY;
+    this.modalLeft = rect.left + rect.width - 700;
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.modalProduct = null;
   }
 }
