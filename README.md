@@ -9,7 +9,11 @@ This is the frontend part of a project that focuses on developing a desktop appl
 - npm >= 10.x
 - Angular >= 19.x
 
-## Run
+## Clone the backend for this project!!!
+### [Java project](https://github.com/Forvi/lifemarch-forecasting-backend.git) (Instructions are introduced)
+### [Python model](https://github.com/Forvi/lifemarch-model-forecaste.git)
+
+## Run project
 
 ### 1. Download and Install [node.js](https://nodejs.org/en/download)
 
