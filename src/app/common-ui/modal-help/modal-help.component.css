@@ -86,7 +86,7 @@
   display: flex;
   height: 220px;
   aspect-ratio: 1;
-  background: var(--primary-green-glass);
+  background: var(--primary-green-color);
   border-radius: 16px;
   padding: 16px;
   align-items: flex-start;
@@ -101,7 +101,7 @@
 }
 
 .list-block:hover{
-  background-color: var(--primary-yellow-color);
+  background-color: var(--primary-green-glass);
   border: 1px solid var(--primary-green-glass);
   transition: 0.3s;
 }
@@ -115,7 +115,7 @@
 .list-block:hover .block-num,
 .list-block:hover .block-text {
   transition: 0.3s;
-  color: var(--dark-color);
+  color: var(--light-color);
 }
 
 

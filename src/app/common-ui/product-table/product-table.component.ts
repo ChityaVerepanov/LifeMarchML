@@ -247,8 +247,8 @@ export class ProductTableComponent {
     this.modalProduct = product;
     this.showModal = true;
     const rect = (event.target as HTMLElement).getBoundingClientRect();
-    this.modalTop = rect.top + window.scrollY;
-    this.modalLeft = rect.left + rect.width - 700;
+    this.modalTop = 400;
+    this.modalLeft = 1200;
   }
 
   closeModal() {
