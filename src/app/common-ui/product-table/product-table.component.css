@@ -289,6 +289,7 @@ td:nth-child(3) {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  min-width: 0;
 }
 
 .graph-button:hover .btn-open-graphs {
@@ -304,4 +305,11 @@ td:nth-child(3) {
   font-size: 18px;
   width: 18px;
   height: 18px;
+}
+
+.product-name-text{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 500px;
 }
