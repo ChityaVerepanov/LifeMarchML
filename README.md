@@ -13,12 +13,12 @@ This is the frontend part of a project that focuses on developing a desktop appl
 
 ### 1. Download and Install [node.js](https://nodejs.org/en/download)
 
-### 2. Download and Install Angular CLi
+### 2. Clone the project
+
+### 3. Download and Install Angular CLi
 ```bash
 npm install -g @angular/cli
 ```
-
-### 3. Clone the project
 
 ### 4. Install Dependencies
 
@@ -26,12 +26,7 @@ npm install -g @angular/cli
 npm install
 ```
 
-### 5. Build project
-```bash
-ng build
-```
-
-### 6. Run
+### 5. Run
 
 #### Run on the web
 
