@@ -69,8 +69,6 @@ h3{
   border-radius: 4px;
   display: flex;
   width: 100%;
-  height: 50px;
-  background-color: var(--primary-green-color);
 }
 
 .btn-close-modal{

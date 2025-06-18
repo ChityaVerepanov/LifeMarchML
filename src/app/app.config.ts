@@ -10,6 +10,7 @@ import { TUI_LANGUAGE, TUI_RUSSIAN_LANGUAGE } from '@taiga-ui/i18n';
 import { of } from 'rxjs';
 import { provideHttpClient } from '@angular/common/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 // Регистрируем русскую локаль
 registerLocaleData(localeRu);
@@ -32,6 +33,8 @@ export const appConfig: ApplicationConfig = {
     {
       provide: LOCALE_ID,
       useValue: 'ru-RU'
-    }
+    },
+    provideCharts(withDefaultRegisterables()),
+
   ]
 };

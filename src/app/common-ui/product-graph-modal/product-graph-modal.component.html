@@ -15,7 +15,12 @@
       файлов.</i></p>
   </div>
   <div class="graph-box">
-
+    <canvas
+      baseChart
+      [type]="chartType"
+      [data]="{ labels: chartLabels, datasets: chartData }"
+      [options]="chartOptions"
+    ></canvas>
   </div>
   <div class="switch-graph">
     <div class="switch-item" (click)="selectGraph('revenue')" [class.active]="selectedGraph === 'revenue'">
